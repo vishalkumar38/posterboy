@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+mysql-connector-python
+passlib
+bcrypt==4.0.1
+python-jose[cryptography]
+python-dotenv
+pydantic
