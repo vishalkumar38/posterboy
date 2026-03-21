@@ -8,22 +8,28 @@ from mysql.connector import pooling
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+# Look for Railway's variables first, fallback to your local .env names if testing locally
+SECRET_KEY = os.getenv("SECRET_KEY", "your-fallback-secret-key")
+DB_HOST = os.getenv("MYSQLHOST") or os.getenv("DB_HOST")
+DB_USER = os.getenv("MYSQLUSER") or os.getenv("DB_USER")
+DB_PASS = os.getenv("MYSQLPASSWORD") or os.getenv("DB_PASS")
+DB_NAME = os.getenv("MYSQLDATABASE") or os.getenv("DB_NAME")
+# Railway often uses custom ports, so we must grab the port variable!
+DB_PORT = os.getenv("MYSQLPORT", 3306)
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-DB_HOST = os.getenv("DB_HOST")
-DB_USER = os.getenv("DB_USER")
-DB_PASS = os.getenv("DB_PASS")
-DB_NAME = os.getenv("DB_NAME")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 app = FastAPI()
 
 mdb_pool = pooling.MySQLConnectionPool(
-    pool_name="pool", pool_size=5,
-    host=DB_HOST, user=DB_USER,
-    passwd=DB_PASS, database=DB_NAME
+    pool_name="pool",
+    pool_size=5,
+    host=DB_HOST,
+    user=DB_USER,
+    passwd=DB_PASS,
+    database=DB_NAME,
+    port=int(DB_PORT) # Added the port here!
 )
 
 pwd_context = CryptContext(schemes=["bcrypt"])
