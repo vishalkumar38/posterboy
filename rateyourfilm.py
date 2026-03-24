@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "your-fallback-secret-key")
 DB_HOST = os.getenv("MYSQLHOST") or os.getenv("DB_HOST")
 DB_USER = os.getenv("MYSQLUSER") or os.getenv("DB_USER")
 DB_PASS = os.getenv("MYSQLPASSWORD") or os.getenv("DB_PASS")
-DB_NAME = os.getenv("MYSQLDATABASE") or os.getenv("DB_NAME")
+DB_NAME = os.getenv("MYSQL_DATABASE") or os.getenv("DB_NAME")
 # Railway often uses custom ports, so we must grab the port variable!
 DB_PORT = os.getenv("MYSQLPORT", 3306)
 
